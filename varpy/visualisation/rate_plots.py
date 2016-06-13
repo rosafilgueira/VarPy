@@ -4,7 +4,7 @@ from numpy import floor, arange, histogram, atleast_2d, linspace, interp, diff, 
 import matplotlib.dates as mdates
 from varpy.management import conversion
 
-def rate_plot(obj1, t_inc=None, t_lims=None, lon_lims=None, lat_lims=None, z_lims=None, Mc=None):
+def ecd_rate_plot(obj1, t_inc=None, t_lims=None, lon_lims=None, lat_lims=None, z_lims=None, Mc=None, Name=None, Save=None):
     """
     Plot the rate and cumulative number of ecd events with time
     
@@ -93,13 +93,16 @@ def rate_plot(obj1, t_inc=None, t_lims=None, lon_lims=None, lat_lims=None, z_lim
     
     ax1.set_xlim(t_min,t_max)
     
-    png_name=obj1.figure+'/Daily_earthquake_rates.png'
-    eps_name=obj1.figure+'/Daily_earthquake_rates.eps'
-    plt.savefig(png_name)
-    plt.savefig(eps_name)
+    if Save is not None:
+        png_name=obj1.figure+'/ecd_rate_plot.png'
+        eps_name=obj1.figure+'/ecd_rate_plot.eps'
+        plt.savefig(png_name)
+        plt.savefig(eps_name)
+    
+    return fig1
 
 
-def scd_plot(obj1,variable=None):
+def scd_rate_plot(obj1,variable=None):
     fig1 = plt.figure(1, figsize=(8,5))
     ax1 = fig1.add_subplot(111, axisbg='lightgrey')
     
@@ -152,7 +155,7 @@ def scd_plot(obj1,variable=None):
         
         ax1.set_xlim(obj1.scld.dataset[:,obj1.scld.header=='datetime'].min(),obj1.scld.dataset[:,obj1.scld.header=='datetime'].max())
     
-    png_name=obj1.figure+'/scd_plot.png'
-    eps_name=obj1.figure+'/scd_plot.eps'
+    png_name=obj1.figure+'/scd_rate_plot.png'
+    eps_name=obj1.figure+'/scd_rate_plot.eps'
     plt.savefig(png_name)
     plt.savefig(eps_name)

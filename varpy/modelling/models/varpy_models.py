@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 """
+Created on Tue Mar 11 11:59:08 2014
+
+@author: abell5
+"""
+
+# -*- coding: utf-8 -*-
+"""
 Created on Wed Jun 29 09:42:18 2011
 
 @author: Andrew Bell
@@ -190,4 +197,3 @@ def creep_mle(obj1, data_type, m1_output, tmin, tmax, tf=None, paras=None):
 
    
     
-

@@ -5,10 +5,10 @@ from varpy.simulation.earthquake_data import eq_sim, etas_sim
 from varpy.simulation.lab_data import ae_sim
 from varpy.simulation.volcanic_data import Eruption_sim, Volcanic_defm_sim, Volcanic_eq_sim
 from varpy.management.import_filters import volc_importers, lab_importers
-from varpy.modelling.models import MLE_retro_models, MLE_rate_models, MLE_forecast_models, LSQ_retro_models
 from varpy.management import data_feed, user_data_feed, conversion
 from datetime import datetime
-from varpy.modelling.models import varpy_models, user_models
+import importlib
+import copy
 
 ###################### Rosa 1
 class Var_Data():
@@ -101,7 +101,7 @@ class Var_Data():
         except:
             getattr(user_data_feed,simulator_name)(self,*paras) 
 
-    def __add_datatype(self,data_type, data_file, metadata_file, name_station=None):
+    def __add_datatype(self,data_type, data_file, metadata_file):
         """
         Private method. Add an datatype to the object. The datatype could be: ecvd, scvd, evc, scld, ecld
         
@@ -124,8 +124,28 @@ class Var_Data():
 
         getattr(data_feed,data_type)(self, data_file, metadata_file)
 
+    def __update_datatype(self,data_type, data_file):
+        """
+        Private method. Update an datatype to the object. The datatype could be: ecvd, scvd, evc, scld, ecld
+        
+        Args:
+            self: A Varpy Var_data object
+            data_type: the datatype name that you want to add to the object (ecld, scld, ecvd, evd, scvd)
+            data_file: the file name which stores the data
+            name_station: the name of the station. Only relevant for "scvd" data_type
+        
+        
+        Raises:
+        """
 
-    def __apply_model(self, data_type, model_type, model_name, start, finish, tf=None, name_station=None, *paras):
+        shutil.copy(data_file,'./'+self.id+'/Data/'+ data_type+'_data.txt')
+        getattr(data_feed,data_type)(self, data_file)
+
+
+   
+    def __apply_model(self, data_type, model_type,  model_name, start, finish, **kwargs): 
+
+
         """
         Private Method. Application of model to the "data_type"  of the object. 
         
@@ -163,10 +183,21 @@ class Var_Data():
             m1_output=Model_Output()
        
             #New_Rosa: Once the Model_Output is created, the model (which name is stored in model_name) is applied, and the outputs are stored in the Model_Output object. 
-            getattr(varpy_models,model_name)(self, data_type, m1_output, tmin, tmax, tf, paras)
+            #To do: Change the way to call the models
+
+
+            model_name_path = 'varpy.modelling.models.'+ model_name 
+            model = importlib.import_module(model_name_path)
+            getattr(model, model_name)(self, data_type, m1_output, tmin, tmax, **kwargs) 
+            #iol_mle.iol_mle(self, data_type, m1_output, tmin, tmax, **kwargs) 
             
+    
+           
+
             getattr(self,data_type).models[model_name].update_model(m1_output)
             
+            #getattr(self,data_type).display_models()
+
             
             
         except:  
@@ -203,17 +234,17 @@ class Model():
         self.outputs.append(model_output)
 
 
-       
-
 
 class Model_Output():
     def __init__(self):
 
-        self.metadata=[]
+        self.metadata={}
         self.dataset=[]
         self.starting_parameters={}
         self.ll=None
         self.ft=None
+        self.mc=None
+        self.t_forc=None
 
     def display_model_outputs(self):
         """
@@ -224,14 +255,23 @@ class Model_Output():
          
         Raises:
         """
+        
         print "dataset:"
         print self.dataset
         print "metadata:"
-        print self.metadata
+        for key in self.metadata.keys() :
+            print key, self.metadata[key]
+        
         print "ll:"
         print self.ll
         print "ft:"
         print self.ft
+        if self.mc is not None:
+            print "mc"
+            print self.mc
+        if self.t_forc is not None:    
+            print "t_forc"
+            print self.t_forc
         print "starting parameters"
         for key, value in self.starting_parameters.iteritems() :
             print key, value     
@@ -273,9 +313,17 @@ class Generic_Data():
                 for m in m1.outputs:
                     m.display_model_outputs();
                 print "- - - - -"
-       
-                 
     
+       
+    def last_model_output(self, model_name):
+        
+        m1=self.models[model_name]
+        return m1.outputs[-1]
+        
+    def update_last_model_output(self, model_output):
+        
+        self.outputs[-1]=model_output 
+        
    
     def add_model_list(self, model_name, modeltype):   
         """
@@ -357,6 +405,8 @@ class Volcanic(Var_Data):
             print key
             self.scvd[key].info_attribute()
 
+
+
     def add_datatype(self,data_type, data_file, metadata_file, name_station=None):
         """
         Add an datatype to the object. 
@@ -377,7 +427,7 @@ class Volcanic(Var_Data):
         """
         
         if data_type == 'ecvd' or data_type == 'evd': 
-             self._Var_Data__add_datatype(data_type, data_file, metadata_file, name_station) 
+             self._Var_Data__add_datatype(data_type, data_file, metadata_file) 
             
         elif data_type =='scvd':
 
@@ -385,7 +435,38 @@ class Volcanic(Var_Data):
             shutil.copy(metadata_file,'./'+self.id+'/Data/scvd'+name_station+'_data.txt')
             shutil.copy(metadata_file,'./'+self.id+'/Metadata/scvd'+name_station+'_metadata.txt')
           
-            getattr(data_feed,data_type)(obj2, data_file, metadata_file, name_station)
+            getattr(data_feed,data_type)(obj2, data_file, name_station, metadata_file)
+           
+            self.scvd[name_station]=obj2
+        
+        else:
+            print "We do not support " + data_type
+    
+
+    def update_datatype(self,data_type, data_file, name_station=None):
+        """
+        Update an datatype to the object. 
+        If the datatype is ecvd, or evc, the __update_datatype method from Var_Data class is called.
+        If the datatype is scvd, then a new Generic_Data is created, and added to the self.scvd
+        dicitonary. Then, the __update_datatype method from Var_Data class is called. Finally, the self.scvd dicitonary is
+        updated. 
+        
+        Args:
+            self: A Varpy Volcanic object
+            data_type: the datatype name that you want to add to the object (ecvd, evd or scvd)
+            data_file: the file name which stores the data
+            name_station: the name of the station. Only relevant for "scvd" data_type
+        
+        
+        Raises:
+        """
+        
+        if data_type == 'ecvd' or data_type == 'evd': 
+             self._Var_Data__update_datatype(data_type, data_file) 
+            
+        elif data_type =='scvd':
+          
+            getattr(data_feed,data_type)(obj2, data_file, name_station)
            
             self.scvd[name_station]=obj2
         
@@ -393,7 +474,8 @@ class Volcanic(Var_Data):
             print "We do not support " + data_type
 
     
-    def apply_model(self, data_type, model_type, model_name, start, finish, tf=None, name_station=None, *paras):
+    def apply_model(self, data_type, model_type, model_name, start, finish, **kwargs): 
+        #tf=None, name_station=None, *paras):
         """
         Application of model to one datatype of the object. 
         The __apply_model method from Var_Data class is called
@@ -419,7 +501,7 @@ class Volcanic(Var_Data):
                 
             else:
                    
-                 self._Var_Data__apply_model(data_type, model_type, model_name, start, finish, tf, name_station, *paras)
+                 self._Var_Data__apply_model(data_type, model_type, model_name, start, finish, **kwargs) 
 
         elif data_type == 'scvd':
             if len(self.scvd) == 0 :
@@ -428,7 +510,7 @@ class Volcanic(Var_Data):
             else :
                 # Question: Should we apply a model, to the scvd data of a specif station ?
                 # self.scvd[name_station] ??? 
-                self.scvd[name_station]._Var_Data__apply_model(data_type, model_type, model_name, start, finish, tf, name_station, *paras) 
+                self.scvd[name_station]._Var_Data__apply_model(data_type, model_type, model_name, start, finish,  **kwargs) 
         else:
 
             print "Error in the attribute " + "datatype"
@@ -448,7 +530,7 @@ class Laboratory(Var_Data):
         self.scld.info_attribute()
         
     
-    def add_datatype(self,data_type, data_file, metadata_file, name_station=None):
+    def add_datatype(self,data_type, data_file, metadata_file):
         """
         Add an datatype to the object. 
         The __add_datatype method from Var_Data class is called.
@@ -471,7 +553,30 @@ class Laboratory(Var_Data):
         else:
             print "We do not support " + data_type
 
-    def apply_model(self, data_type, model_type, model_name, start, finish, tf=None, name_station=None, *paras):
+    def update_datatype(self,data_type, data_file):
+        """
+        Add an datatype to the object. 
+        The __update_datatype method from Var_Data class is called.
+        
+        Args:
+            self: A Varpy Laboratory object
+            data_type: the datatype name that you want to add to the object (ecld or scld)
+            data_file: the file name which stores the data
+            name_station: None
+        
+        
+        Raises:
+        """
+        
+        
+        if data_type == 'ecld' or data_type == 'scld': 
+           
+            self._Var_Data__update_datatype(data_type, data_file) 
+        else:
+            print "We do not support " + data_type    
+
+    def apply_model(self, data_type, model_type, model_name, start, finish, **kwargs): 
+        #tf=None, name_station=None, *paras):
         """
         Application of model to the "data_type" of the object. 
         The __apply_model method from Var_Data class is called. 
@@ -497,11 +602,16 @@ class Laboratory(Var_Data):
                 
             else:
 
-                self._Var_Data__apply_model(data_type, model_type, model_name, start, finish, tf, name_station, *paras) 
+                self._Var_Data__apply_model(data_type, model_type, model_name, start, finish, **kwargs) 
 
         else:
 
-            print "Error in the datatype " + "data_type"       
+            print "Error in the datatype " + "data_type" 
+
+
+        
+
+               
              
      
 

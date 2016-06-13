@@ -1,153 +1,81 @@
 #Function to plot rates of earthquakes leading up to the point of eruptions
 import matplotlib.pyplot as plt
-from numpy import arange, int, linspace, interp, diff
-import copy
+from numpy import linspace, floor, ceil
+
 from varpy.statistics import rate_funcs
 from varpy.management import conversion
+from varpy.visualisation import rate_plots
 
-# Rosa comment: I have change the functions in order to be able to be used with ecvd and ecld data. 
-
-def iol_total_plot(obj1, data_type , model_name, start, finish):
-    try:
-        tmin=conversion.date2int(start)
-        tmax=conversion.date2int(finish)
-    except:
-        tmin=start
-        tmax=finish
-        pass
-    
-    days = arange(int(tmax-tmin))
-
-    model= getattr(obj1, data_type).models[model_name]
-
-    
-
-
-    dataset=[]
-    for m in model.outputs: 
-        dataset.extend(m.dataset)
-
-
-
-    fig1 = plt.figure(1, figsize=(8,6))
-    ax1 = fig1.add_subplot(111)
-    ax2 = ax1.twinx()
-    ax2.plot(days+tmin, rate_funcs.iol_total(days, 0.0, dataset[0], dataset[1], dataset[2]), 'r-')
-    ax1.set_xlim(tmin, tmax)
-
-    png_name=obj1.figure+'/iol_plot.png'
-    eps_name=obj1.figure+'/iol_plot.eps'
-    plt.savefig(png_name)
-    plt.savefig(eps_name)
-
-    
-def hyp_total_plot(obj1, data_type , model_name, start, finish):
-    try:
-        tmin=conversion.date2int(start)
-        tmax=conversion.date2int(finish)
-    except:
-        tmin=start
-        tmax=finish
-        pass
-    
-    days = arange(int(tmax-tmin))
-
-    model= getattr(obj1, data_type).models[model_name]
-
-    dataset=[]
-    for m in model.outputs: 
-        dataset.extend(m.dataset)
-
-    fig1 = plt.figure(1, figsize=(8,6))
-    ax1 = fig1.add_subplot(111)
-    ax2 = ax1.twinx()
-    ax2.plot(days+tmin, rate_funcs.hyp_total(days, 0.0, dataset[0], dataset[1]), 'b-')
-    ax1.set_xlim(tmin, tmax)
-    
-    png_name=obj1.figure+'/hyp_plot.png'
-    eps_name=obj1.figure+'/hyp_plot.eps'
-    plt.savefig(png_name)
-    plt.savefig(eps_name)
-
-def exp_total_plot(obj1, data_type , model_name, start, finish):
-    try:
-        tmin=conversion.date2int(start)
-        tmax=conversion.date2int(finish)
-    except:
-        tmin=start
-        tmax=finish
-        pass
-    
-    days = arange(int(tmax-tmin))
-
-    model= getattr(obj1, data_type).models[model_name]
-    dataset=[]
-    for m in model.outputs: 
-        dataset.extend(m.dataset)
-    #key_list=model.outputs.keys()
-    #dataset=[]
-
-    #for key in key_list:
-    #    dataset.extend(model.outputs[key].dataset)
-
-    fig1 = plt.figure(1, figsize=(8,6))
-    ax1 = fig1.add_subplot(111)
-    ax2 = ax1.twinx()
-    ax2.plot(days+tmin, rate_funcs.exp_total(days, 0.0, dataset[0], dataset[1]), 'g-')
-    ax1.set_xlim(tmin, tmax)
-    
-    png_name=obj1.figure+'/exp_plot.png'
-    eps_name=obj1.figure+'/exp_plot.eps'
-    plt.savefig(png_name)
-    plt.savefig(eps_name)
-
-# Rosa comment: I am not sure about this method. It is only for scld data ??? what about scvd data ? 
-# Can you tell me if, volcanic data are going to use this function ?    
-def creep_model_plot(obj1, data_type , model_name, start, finish):
-
-    
-    fig1 = plt.figure(1, figsize=(8,5))
-    ax1 = fig1.add_subplot(111)
-    
-    var_column = getattr(obj1,data_type).header.index(variable)
-    var_data = getattr(obj1,data_type).dataset[:,var_column]
-    var_data = var_data -var_data[0]
-    
-    dt_column=getattr(obj1,data_type).header.index('datetime')
-    dt_data = getattr(obj1,data_type).dataset[:,dt_column]
-    dt_data = dt_data - dt_data[0]
-    
-    times = linspace(dt_data[0],dt_data[-1], num = 501)
-    vals = interp(times, dt_data, var_data)
-    
-    midtimes = times[:-1] + diff(times)/2.
-    rates = diff(vals)/diff(times)
-
-    model= getattr(obj1, data_type).models[model_name]
-
-    dataset=[]
-    for m in model.outputs: 
-        dataset.extend(m.dataset)
-    
-    
-    ax1.plot(midtimes, rates, 'o')
-    ax1.plot(midtimes, rate_funcs.creep_rate(midtimes, dataset[0], dataset[1], dataset[2], dataset[3], dataset[4], dataset[5]), 'r-')
-    ax1.set_ylabel(variable + ' rate (/s)', fontsize=8)
-    
-    ax2 = ax1.twinx()
-    ax2.plot(dt_data, var_data)
-    ax2.plot(times, rate_funcs.creep_total(times, 0.0, dataset[0], dataset[1], dataset[2], dataset[3], dataset[4], dataset[5]), 'r-')
-    ax2.set_xlabel('Time (seconds)', fontsize=8)
+def model_plot(obj1, data_type, model_name, t_inc=None, t_lims=None):
+    if data_type is 'ecvd' or 'ecld':
         
-    ax2.set_ylabel(variable, fontsize=8)
-    
-    ax1.xaxis.set_ticks_position('bottom')
-    ax1.set_ylabel('Creep time (Secs)', fontsize=8)
+        #1. Determine t_min and t_max - check these aren't stored in model information...
+        if t_lims is not None:
+            try:
+                t_min=conversion.date2int(t_lims[0])
+                t_max=conversion.date2int(t_lims[1])
+            except:
+                t_min = float(t_lims[0])
+                t_max = float(t_lims[1])
+                pass
+        else:
+            if obj1.type == 'volcanic':
+                data = obj1.ecvd.dataset
+                header = obj1.ecvd.header     
+            else:    
+                data = obj1.ecld.dataset
+                header = obj1.ecld.header
+            
+            dt_data = data[:,header.index('datetime')] 
+              
+            t_min = floor(dt_data.min())
+            t_max = ceil(dt_data.max())
+        
+        #2. Plot the underlying rate/total graph using "rate_plots" - still need to confirm this works
+        #Seems unnecessary to repeat same plotting code here.
+        fig = rate_plots.ecd_rate_plot(obj1, t_inc=None, t_lims=None, Save=None)
+        
+        #3. Get the axes from fig to modify with new series - how best to do this?
+        axes = fig.get_axes()
+        ax1 = axes[0]
+        ax2 = axes[1]
+        
+        #4. Create series of times between t_max, t_min to evaulate model rate, totals
+        times = linspace(t_min, t_max, 500)
+        
+        
+        for model in getattr(obj1,data_type).models.keys():
+            
+            m0=getattr(obj1,data_type).models[model].outputs
 
-    ax1.set_ylim(rates.min(), rates.max())
-    ax2.set_ylim(vals.min(), vals.max())
+            for m1 in m0:
+                #5. For each model, get rate, total function name
+                rate_func =  m1.metadata['rate_func']
+                total_func = m1.metadata['total_func']
+                
+                #6. For each model, get parameters
+                params = m1.dataset
+                
+                #7. Determine, plot rates
+                #Check that the correct "daily rate" are reported...
+                rates = getattr(rate_funcs, rate_func[0])(times-t_min, params)
+                ax1.plot(times, rates, '-')            
+                
+                #8. Determine, plot totals
+                totals = getattr(rate_funcs, total_func[0])(times-t_min, 0., params)
+                ax2.plot(times, totals, '-')
+            
+            #9. Legend
+         
+    else:
+        #Alternative for SCVD, SCLD data?
+        print 'SCLD and SCVD data not currently supported'
     
-    png_name=obj1.figure+'/creep_plot.png'
-    eps_name=obj1.figure+'/creep_plot.eps'
+    ax1.set_xlim(t_min, t_max)
+    
+    png_name=obj1.figure+'/model_plot.png'
+    eps_name=obj1.figure+'/model_plot.eps'
     plt.savefig(png_name)
     plt.savefig(eps_name)
+#
+

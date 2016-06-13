@@ -40,13 +40,21 @@ def mol_total(t, t0, k, c, p):
 
 #########################################
 #3. Rate function for inverse Omori law:
-def iol_rate(t, k, tf, p):
+def iol_rate(t, params):
+    k=params[0]
+    tf=params[1]
+    p=params[2]
+    
     rate = []
     rate = k*(tf-t)**-p
     return rate
 
 #4. Total function for inverse Omori law:
-def iol_total(t, t0, k, tf, p):
+def iol_total(t, t0, params):
+    k=params[0]
+    tf=params[1]
+    p=params[2]
+    
     total = []
     if p == 1.0:
         total = k*(-np.log(tf-t) + np.log(tf-t0))

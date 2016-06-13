@@ -82,14 +82,14 @@ def iol_negll_og_tf(paras, tf, t0, t1, times):
 
 #2b. neg_ll for IOL, Ogata's method
 #p known a priori
-def iol_negll_og_p(paras, p, t0, t1, times):
+def hyp_negll(paras, t0, t1, times):
     #paras are [k, tf]
     #t0, t1 are start and end of data
     #times are observed earthquake times
     
     np.seterr(all='ignore') #Errors caught and set to large value
     neg_ll = []
-    f1 = np.sum(np.log(paras[0]*((paras[1]-times)**-p)))
+    f1 = np.sum(np.log(paras[0]*((paras[1]-times)**-1.)))
     
     sasump = -np.log(paras[1]-t1) + np.log(paras[1]-t0)
     

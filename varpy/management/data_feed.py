@@ -2,10 +2,11 @@ from varpy.management.import_filters import volc_importers, lab_importers
 from varpy.simulation.lab_data import ae_sim
 from varpy.simulation.volcanic_data import Eruption_sim, Volcanic_defm_sim, Volcanic_eq_sim
 
-def ecvd( obj1, data_file, metadata_file):
+def ecvd( obj1, data_file, metadata_file=None):
     
-	#Import metadata from the  meadata_file file, and store it into the object. 
-	obj1.ecvd.metadata= volc_importers.metadata_imp(metadata_file)
+	#Import metadata from the  meadata_file file, and store it into the object.
+	if metadata_file != None: 
+		obj1.ecvd.metadata= volc_importers.metadata_imp(metadata_file)
 
 	#Import data from the data_file file, and store it into the object. 
 	if obj1.ecvd.metadata['location'] == 'Etna':
@@ -20,12 +21,13 @@ def ecvd( obj1, data_file, metadata_file):
 
 
 
-def scvd(obj1, data_file, metadata_file, name_station):
+def scvd(obj1, data_file, name_station, metadata_file=None):
 	# Store the name_station into the object 
 	obj1.station=name_station
 
 	# Import metadata from the  meadata_file file, and store it into the object. 
-	obj1.metadata = volc_importers.metadata_imp( metadata_file)
+	if metadata_file != None:
+		obj1.metadata = volc_importers.metadata_imp( metadata_file)
 
 	#Import data from the data_file file, and store it into the object. 
 	if obj1.metadata['location'] == 'Etna':
@@ -35,10 +37,11 @@ def scvd(obj1, data_file, metadata_file, name_station):
 	#Store the header it into the object.
 	obj1.header=['datetime','tilt']  
 
-def evd(obj1, data_file, metadata_file):
+def evd(obj1, data_file, metadata_file=None):
 
-	# Import metadata from the  meadata_file file, and store it into the object. 
-	obj1.evd.metadata= volc_importers.metadata_imp(metadata_file)  
+	# Import metadata from the  meadata_file file, and store it into the object.
+	if metadata_file != None: 
+		obj1.evd.metadata= volc_importers.metadata_imp(metadata_file)  
 
 	#Import data from the data_file file, and store it into the object. 
 	if obj1.evd.metadata['location'] == 'Etna':
@@ -51,10 +54,11 @@ def evd(obj1, data_file, metadata_file):
 
 
 
-def ecld(obj1, data_file, metadata_file):
+def ecld(obj1, data_file, metadata_file=None):
 
-	# Import metadata from the  meadata_file file, and store it into the object. 
-	obj1.ecld.metadata = lab_importers.metadata_imp(metadata_file)
+	# Import metadata from the  meadata_file file, and store it into the object.
+	if metadata_file != None: 
+		obj1.ecld.metadata = lab_importers.metadata_imp(metadata_file)
 
 	#Import data from the data_file file, and store it into the object. 
 	if obj1.ecld.metadata['format'] == 'UCLv1':
@@ -65,10 +69,11 @@ def ecld(obj1, data_file, metadata_file):
 
 
 
-def scld(obj1, data_file, metadata_file):
+def scld(obj1, data_file, metadata_file=None):
 
 	# Import metadata from the  meadata_file file, and store it into the object.
-	obj1.scld.metadata = lab_importers.metadata_imp(metadata_file)
+	if metadata_file != None:
+		obj1.scld.metadata = lab_importers.metadata_imp(metadata_file)
 
 	#Import data from the data_file file, and store it into the object. 
 	if obj1.scld.metadata['format'] == 'UCLv1':

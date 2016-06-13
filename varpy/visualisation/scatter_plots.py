@@ -6,13 +6,13 @@ from numpy import logical_and, floor, ceil
 
 def scatter_plot(obj1, variable1, variable2=None, colour=None, x_lims=None, y_lims=None, t_lims=None, lon_lims=None, lat_lims=None, z_lims=None, Mc=None):
     """
-    Plot the evolution of ecvd variables. If a single variable is specified, this is plotted as a function of datatime. 
-    If two are specified, these are plotted as 1st and 2nd variables repspectively
+    Plot the evolution of ecvd variables. If a single variable is specified, this is plotted as a function of datetime. 
+    If a second variable is specified, this is plotted on the y-axis, with variable1 on the x-axis
     
     Args:
         obj1: a varpy object containing 
-        variable1: the first ecvd variable to plot
-        variable2: the second ecvd variable to plot (optional)
+        variable1: first ecvd variable
+        variable2: second ecvd variable (optional)
         colour: variable to define colour scale
         x_lims: [x_min, x_max] defining x-axis limits
         y_lims: [y_min, y_max] defining y-axis limits
@@ -63,17 +63,19 @@ def scatter_plot(obj1, variable1, variable2=None, colour=None, x_lims=None, y_li
             t_max = ceil(v1_data.max())
         
         if y_lims is None:
-            y_lims = [v1_data.min(), v1_data.max()]
+            y_min = v2_data.min()
+            y_max = v2_data.max()
     else:
         v1_data = data[:,header.index(variable1)]
         v2_data = data[:,header.index(variable2)]
         
         if x_lims is None:
-            x_min = floor(v2_data.min())
-            x_max = ceil(v2_data.max())
+            x_min = v1_data.min()
+            x_max = v1_data.max()
 
         if y_lims is None:
-            y_lims = [v2_data.min(), v2_data.max()]
+            y_min = v2_data.min()
+            y_max = v2_data.max()
     
     
     fig1 = plt.figure(1, figsize=(8,6))
@@ -84,8 +86,7 @@ def scatter_plot(obj1, variable1, variable2=None, colour=None, x_lims=None, y_li
         cvar_column = header.index(colour)
         c_val = data[:,cvar_column]
     
-    if variable2 is None:
-        
+    if variable2 is None:     
         if v1_data[0]>693500:
             ax1.scatter(mdates.num2date(v1_data), v2_data, marker='o', s=9, c=c_val, edgecolor='none')
             ax1.set_xlabel('Date', fontsize=10)
@@ -96,24 +97,21 @@ def scatter_plot(obj1, variable1, variable2=None, colour=None, x_lims=None, y_li
         ax1.set_ylabel(variable1, fontsize=10)
         
         ax1.set_xlim(t_min,t_max)
-        ax1.set_ylim(y_lims[0],y_lims[1])
+        ax1.set_ylim(y_min,y_max)
         
         if variable1 == 'depth':
             ax1.invert_yaxis()
         
-    else:
-        
+    else:    
         ax1.scatter(v1_data, v2_data, marker='o', s=9, c=c_val, edgecolor='none')
         ax1.set_xlabel(variable1, fontsize=10)
         ax1.set_ylabel(variable2, fontsize=10)
         
         ax1.set_xlim(x_min,x_max)
-        ax1.set_ylim(y_lims[0],y_lims[1])
+        ax1.set_ylim(y_min,y_max)
     
         if variable2 == 'depth':
             ax1.invert_yaxis()
-    
-
     
     png_name=obj1.figure+'/'+variable1+'_scatter.png'
     eps_name=obj1.figure+'/'+variable1+'_scatter.eps'

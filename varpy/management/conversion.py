@@ -13,6 +13,13 @@ def date2int(date_str):
 def date2int2(date_str):
     date = datetime.strptime(date_str, '%d/%m/%Y')
     return date.toordinal()
+def date2int(date_str):
+    date = datetime.strptime(date_str, '%d-%m-%Y')
+    return date.toordinal()
+
+def date2int4(date_str):
+    date = datetime.strptime(date_str, '%Y-%m-%d')
+    return date.toordinal()    
 
 
 def date2int3(date_str):
