@@ -1,0 +1,2 @@
+id	datatype	time_int_sample	time_start	time_finish	location	location_unit	depth_unit	date_format	time_format	ongoing
+2	2	0	01-01-2011	30-09-2013	HVO	degrees	km	dd/mm/yyyy	hh:mm:ss	1

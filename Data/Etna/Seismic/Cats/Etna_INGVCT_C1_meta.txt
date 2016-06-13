@@ -1,0 +1,2 @@
+date_format	depth_unit	time_start	datatype	time_int_sample	time_format	time_finish	location	ongoing	location_unit	id	
+dd/mm/yyyy	km	01-01-1995	2	0	hh:mm:ss	21-04-14	Etna	1	degrees	2	
