@@ -23,8 +23,7 @@ For trying the example "VarPy_Hierro_Ex1.py":
 	1) Clone the VarPy repository in your machine
 	2) Add the VarPy repository path into the PYTHONPATH (e.g., export PYTHONPATH=/Users/rosa/VarPy)
 	3) Execute the example:
-		```python
-		   python VarPy_Hierro_Ex1.py	
-		``` 
+		python VarPy_Hierro_Ex1.py	
+
 	4) If the example works in your machine, it will genereate a new directory called "Hierro2" with "Data", "Figure", "Metadata" and "Output" subdirectories. 
 
