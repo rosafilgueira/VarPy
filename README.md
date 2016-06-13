@@ -10,9 +10,9 @@ The goal of the VarPy library is to accelerate the uptake
 of computational methods by researches in volcanology and rock
 physics. In this repository you can find:
 
-1) Reading material about VarPy Library presented at two conferences:
-	- EGU 2014 
-	- PyHPC 2015
-2) varpy python library codes
-3) datasets (Data and Library directories) to try varpy
-4) an example: VarPy_Hierro_Ex1.py 
+	*1) Reading material about VarPy Library presented at two conferences:
+		** EGU 2014 
+		** PyHPC 2015
+	*2) varpy python library codes
+	*3) datasets (Data and Library directories) to try varpy
+	*4) an example: VarPy_Hierro_Ex1.py 
