@@ -18,7 +18,7 @@ varpy python library codes
 
 Datasets (Data and Library directories) to try varpy
 
-Several examples of how to use varpy library [example](https://github.com/rosafilgueira/VarPy/blob/master/python_scripts)
+Several examples of how to use varpy library [varpy examples](https://github.com/rosafilgueira/VarPy/blob/master/python_scripts)
 
 For trying the example "VarPy_Hierro_Ex1.py":
 
