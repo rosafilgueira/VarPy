@@ -11,9 +11,8 @@ of computational methods by researches in volcanology and rock
 physics. In this repository you can find:
 
 	1) Reading material about VarPy Library presented at two conferences:
-		[I'm an inline-style link](https://www.google.com)
-		 EGU 2014:[VarPy_EGU2014.pdf](https://github.com/rosafilgueira/VarPy/blob/master/VarPy_EGU2014.pdf) 
-		 PyHPC 2015: [Paper-VarPy](https://github.com/rosafilgueira/VarPy/blob/master/pyhpc2014_submission_4.pdf)[Slides](https://github.com/rosafilgueira/VarPy/blob/master/pyhpc2014-4-VarPy.pdf)
+		EGU 2014:[VarPy_EGU2014.pdf](https://github.com/rosafilgueira/VarPy/blob/master/VarPy_EGU2014.pdf) 
+		PyHPC 2015:[Paper-VarPy](https://github.com/rosafilgueira/VarPy/blob/master/pyhpc2014_submission_4.pdf)[Slides](https://github.com/rosafilgueira/VarPy/blob/master/pyhpc2014-4-VarPy.pdf)
 	2) varpy python library codes
 	3) datasets (Data and Library directories) to try varpy
 	4) [an example]: (https://github.com/rosafilgueira/VarPy/blob/master/VarPy_Hierro_Ex1.py) 
