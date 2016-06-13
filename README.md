@@ -18,13 +18,13 @@ varpy python library codes
 
 Datasets (Data and Library directories) to try varpy
 
-An example of a varpy script [example](https://github.com/rosafilgueira/VarPy/blob/master/VarPy_Hierro_Ex1.py)
+Several examples of how to use varpy library [example](https://github.com/rosafilgueira/VarPy/blob/master/python_scripts)
 
 For trying the example "VarPy_Hierro_Ex1.py":
 
 	1) Clone the VarPy repository in your machine
 	2) Add the VarPy repository path into the PYTHONPATH (e.g., export PYTHONPATH=/Users/rosa/VarPy)
-	3) Execute the example:
+	3) Execute the any of the scripts inside the directory 'python_scripts':
 		python VarPy_Hierro_Ex1.py	
 
 	4) If the example works in your machine,it will genereate a new directory called "Hierro2"
