@@ -25,7 +25,6 @@ For trying the example "VarPy_Hierro_Ex1.py":
 	3) Execute the example:
 		python VarPy_Hierro_Ex1.py	
 
-	4) If the example works in your machine,
-	it will genereate a new directory called "Hierro2"
+	4) If the example works in your machine,it will genereate a new directory called "Hierro2"
 	with "Data", "Figure", "Metadata" and "Output" subdirectories. 
 
