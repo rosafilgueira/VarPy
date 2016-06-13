@@ -8,7 +8,9 @@ data. It provides several functions, which allow users to define
 their own workflows to develop models, analyses and visualisations.
 The goal of the VarPy library is to accelerate the uptake
 of computational methods by researches in volcanology and rock
-physics. In this repository you can find:
+physics. 
+
+In this repository you can find:
 
 Reading material about VarPy Library presented at two conferences:[Slides-EGU2014](https://github.com/rosafilgueira/VarPy/blob/master/VarPy_EGU2014.pdf), [Paper-PyHPC2014](https://github.com/rosafilgueira/VarPy/blob/master/pyhpc2014_submission_4.pdf), and [Slides-PyHPC2014](https://github.com/rosafilgueira/VarPy/blob/master/pyhpc2014-4-VarPy.pdf)
 
