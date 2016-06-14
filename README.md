@@ -18,11 +18,11 @@ In this repository you can find:
 
 - Some datasets (Data and Library directories) to work later with varpy examples (python scripts and notebook)
 
-- Several examples of how to use varpy library [varpy examples](https://github.com/rosafilgueira/VarPy/blob/master/python_scripts)
+- Several python examples of how to use varpy library [varpy examples](https://github.com/rosafilgueira/VarPy/blob/master/python_scripts)
 
-- Python [Notebook example](https://github.com/rosafilgueira/VarPy/blob/master/Iceland_Tjornes.ipynb),
-which shows an example about data exploration and visualization based on the Tjornes fracture zone (Iceland).
-This example is explained in all the reading material provided in this repository. 
+- A python [Notebook example](https://github.com/rosafilgueira/VarPy/blob/master/Iceland_Tjornes.ipynb),
+which shows how varpy can help in the data exploration and visualization based on the Tjornes fracture zone (Iceland).
+This example is explained across the reading material provided in this repository. 
 
 For trying a varpy example (python script or notebook):
 
