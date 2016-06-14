@@ -1,5 +1,4 @@
-# VarPy
-VarPy: A python library for volcanic and rock physics data analysis
+# VarPy: A python library for volcanic and rock physics data analysis
 
 
 VarPy is an open-source toolbox which provides a
