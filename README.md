@@ -20,7 +20,11 @@ structure of the varpy library (Section V. VarPy Packages and Modules).
 
 - Some datasets (Data and Library directories) to work later with varpy examples (python scripts and notebook)
 
-- Several python examples of how to use varpy library [varpy examples](https://github.com/rosafilgueira/VarPy/blob/master/python_scripts)
+- Several [python examples](https://github.com/rosafilgueira/VarPy/blob/master/python_scripts) for explaining how to use varpy library 
+	- [retrospective analysis 1](https://github.com/rosafilgueira/VarPy/blob/master/python_scripts/varpy_modelworkflow1a.py), [retrospective analysis 2](https://github.com/rosafilgueira/VarPy/blob/master/python_scripts/varpy_modelworkflow2a.py)
+	- [single forecast 1](https://github.com/rosafilgueira/VarPy/blob/master/python_scripts/varpy_modelworkflow1b.py), [single forecast 2](https://github.com/rosafilgueira/VarPy/blob/master/python_scripts/varpy_modelworkflow2b.py)
+	- [retrospective forecast 1](https://github.com/rosafilgueira/VarPy/blob/master/python_scripts/varpy_modelworkflow1c.py), [retrospective forecast 2](https://github.com/rosafilgueira/VarPy/blob/master/python_scripts/varpy_modelworkflow2c.py)
+	- [prospective forecast 1](https://github.com/rosafilgueira/VarPy/blob/master/python_scripts/varpy_modelworkflow1d.py), [retrospective forecast 2](https://github.com/rosafilgueira/VarPy/blob/master/python_scripts/varpy_modelworkflow2d.py) 
 
 - A python [Notebook example](https://github.com/rosafilgueira/VarPy/blob/master/Iceland_Tjornes.ipynb),
 which shows how varpy can help in the data exploration and visualization based on the Tjornes fracture zone (Iceland).
