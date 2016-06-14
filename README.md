@@ -20,6 +20,7 @@ Datasets (Data and Library directories) to try varpy
 
 Several examples of how to use varpy library [varpy examples](https://github.com/rosafilgueira/VarPy/blob/master/python_scripts)
 
+Python [Notebook example](https://github.com/rosafilgueira/VarPy/blob/master/python_scripts) 
 For trying the example "VarPy_Hierro_Ex1.py":
 
 	1) Clone the VarPy repository in your machine
@@ -27,6 +28,4 @@ For trying the example "VarPy_Hierro_Ex1.py":
 	3) Execute the any of the scripts inside the directory 'python_scripts':
 		python VarPy_Hierro_Ex1.py	
 
-	4) If the example works in your machine,it will genereate a new directory called "Hierro2"
-	with "Data", "Figure", "Metadata" and "Output" subdirectories inside it. 
-
+	4) A 
