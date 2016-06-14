@@ -12,7 +12,7 @@ physics.
 
 In this repository you can find:
 
-Reading material about VarPy Library presented at two conferences:[Slides-EGU2014](https://github.com/rosafilgueira/VarPy/blob/master/VarPy_EGU2014.pdf), [Paper-PyHPC2014](https://github.com/rosafilgueira/VarPy/blob/master/pyhpc2014_submission_4.pdf), and [Slides-PyHPC2014](https://github.com/rosafilgueira/VarPy/blob/master/pyhpc2014-4-VarPy.pdf)
+Reading material about VarPy Library presented at two conferences: [Slides-EGU2014](https://github.com/rosafilgueira/VarPy/blob/master/VarPy_EGU2014.pdf), [Paper-PyHPC2014](https://github.com/rosafilgueira/VarPy/blob/master/pyhpc2014_submission_4.pdf), and [Slides-PyHPC2014](https://github.com/rosafilgueira/VarPy/blob/master/pyhpc2014-4-VarPy.pdf)
 
 varpy modules and packages
 
@@ -21,7 +21,8 @@ Some datasets (Data and Library directories) to work later with varpy examples (
 Several examples of how to use varpy library [varpy examples](https://github.com/rosafilgueira/VarPy/blob/master/python_scripts)
 
 Python [Notebook example](https://github.com/rosafilgueira/VarPy/blob/master/Iceland_Tjornes.ipynb),
-which shows an example about data exploration and visualization based on the Tjornes fracture zone (Iceland) 
+which shows an example about data exploration and visualization based on the Tjornes fracture zone (Iceland).
+This example is explained in all the reading material provided in this repository. 
 
 For trying a varpy example (python script or notebook):
 
