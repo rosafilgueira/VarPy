@@ -14,7 +14,9 @@ In this repository you can find:
 
 - Reading material about VarPy Library presented at two conferences: [Slides-EGU2014](https://github.com/rosafilgueira/VarPy/blob/master/VarPy_EGU2014.pdf), [Paper-PyHPC2014](https://github.com/rosafilgueira/VarPy/blob/master/pyhpc2014_submission_4.pdf), and [Slides-PyHPC2014](https://github.com/rosafilgueira/VarPy/blob/master/pyhpc2014-4-VarPy.pdf)
 
-- Source code: [varpy modules and packages](https://github.com/rosafilgueira/VarPy/tree/master/varpy)
+- Source code: [varpy modules and packages](https://github.com/rosafilgueira/VarPy/tree/master/varpy).
+Note that the paper [Paper-PyHPC2014](https://github.com/rosafilgueira/VarPy/blob/master/pyhpc2014_submission_4.pdf) contains the complete
+structure of the varpy library (Section V. VarPy Packages and Modules).
 
 - Some datasets (Data and Library directories) to work later with varpy examples (python scripts and notebook)
 
