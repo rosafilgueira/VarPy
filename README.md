@@ -15,7 +15,7 @@ In this repository you can find:
 
 - Source code: [varpy modules and packages](https://github.com/rosafilgueira/VarPy/tree/master/varpy).
 Note that the paper [Paper-PyHPC2014](https://github.com/rosafilgueira/VarPy/blob/master/pyhpc2014_submission_4.pdf) contains the complete
-structure of the VarPy library (Section V. *VarPy Packages and Modules*).
+structure of the VarPy library (*Section V. VarPy Packages and Modules*).
 
 - Some datasets (Data and Library directories) to work later with VarPy examples (python scripts and notebook)
 
