@@ -30,5 +30,5 @@ For trying a varpy example (python script or notebook):
 
 	3a) Execute the any of the scripts inside the directory 'python_scripts':
                 python VarPy_Hierro_Ex1.py
-
-        3b) Or execute ipython notebook to open Iceland_Tjornes.ipynb 
+	
+	3b) Or execute ipython notebook to open Iceland_Tjornes.ipynb 
