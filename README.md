@@ -14,18 +14,21 @@ In this repository you can find:
 
 Reading material about VarPy Library presented at two conferences:[Slides-EGU2014](https://github.com/rosafilgueira/VarPy/blob/master/VarPy_EGU2014.pdf), [Paper-PyHPC2014](https://github.com/rosafilgueira/VarPy/blob/master/pyhpc2014_submission_4.pdf), and [Slides-PyHPC2014](https://github.com/rosafilgueira/VarPy/blob/master/pyhpc2014-4-VarPy.pdf)
 
-varpy python library codes
+varpy modules and packages
 
-Datasets (Data and Library directories) to try varpy
+Some datasets (Data and Library directories) to work later with varpy examples (python scripts and notebook)
 
 Several examples of how to use varpy library [varpy examples](https://github.com/rosafilgueira/VarPy/blob/master/python_scripts)
 
-Python [Notebook example](https://github.com/rosafilgueira/VarPy/blob/master/python_scripts) 
-For trying the example "VarPy_Hierro_Ex1.py":
+Python [Notebook example](https://github.com/rosafilgueira/VarPy/blob/master/Iceland_Tjornes.ipynb),
+which shows an example about data exploration and visualization based on the Tjornes fracture zone (Iceland) 
+
+For trying a varpy example (python script or notebook):
 
 	1) Clone the VarPy repository in your machine
 	2) Add the VarPy repository path into the PYTHONPATH (e.g., export PYTHONPATH=/Users/rosa/VarPy)
-	3) Execute the any of the scripts inside the directory 'python_scripts':
-		python VarPy_Hierro_Ex1.py	
 
-	4) A 
+	3a) Execute the any of the scripts inside the directory 'python_scripts':
+                python VarPy_Hierro_Ex1.py
+
+        3b) Or execute ipython notebook to open Iceland_Tjornes.ipynb 
